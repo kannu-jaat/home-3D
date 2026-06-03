@@ -66,7 +66,11 @@ export function buildWall(element, layer, scene, textures)
   let distance = verticesDistance( vertex0, vertex1 );
   let halfDistance = distance / 2;
 
-  let soulMaterial = new MeshBasicMaterial( {color: ( element.selected ? SharedStyle.MESH_SELECTED : 0xD3D3D3 )} );
+  let soulMaterial = new MeshBasicMaterial( {
+    color: ( element.selected ? SharedStyle.MESH_SELECTED : 0xD3D3D3 ),
+    transparent: true,
+    opacity: 0.3
+  } );
   let soul = new Mesh( new BoxGeometry(distance, height, thickness), soulMaterial );
 
   let alpha = Math.asin((vertex1.y - vertex0.y) / (distance));
@@ -107,8 +111,8 @@ export function buildWall(element, layer, scene, textures)
 
   soul.name = 'soul';
 
-  let frontMaterial = new MeshBasicMaterial();
-  let backMaterial = new MeshBasicMaterial();
+  let frontMaterial = new MeshBasicMaterial({ transparent: true, opacity: 0.3 });
+  let backMaterial = new MeshBasicMaterial({ transparent: true, opacity: 0.3 });
 
   applyTexture(frontMaterial, textures[element.properties.get('textureB')], distance, height);
   applyTexture(backMaterial, textures[element.properties.get('textureA')], distance, height);
@@ -144,7 +148,11 @@ export function updatedWall( element, layer, scene, textures, mesh, oldElement, 
   let backFace = mesh.getObjectByName('backFace');
 
   if( differences[0] == 'selected' ) {
-    soul.material = new MeshBasicMaterial( {color: ( element.selected ? SharedStyle.MESH_SELECTED : 0xD3D3D3 )} );
+    soul.material = new MeshBasicMaterial( {
+      color: ( element.selected ? SharedStyle.MESH_SELECTED : 0xD3D3D3 ),
+      transparent: true,
+      opacity: 0.3
+    } );
   }
   else if( differences[0] == 'properties' ){
 
